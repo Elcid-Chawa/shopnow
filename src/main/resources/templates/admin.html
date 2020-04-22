@@ -3,10 +3,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
 
-    <title>Home</title>
+    <title>Admin Panel</title>
 </head>
 <body class="p-3 mb-2 bg-light text-black">
 <div class="container" >
@@ -18,93 +25,99 @@
     <div id="contentDiv" style="clear: right;">
         <nav style="clear: right;">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-files-tab" data-toggle="tab" href="#nav-files" role="tab" aria-controls="nav-files" aria-selected="true">Files</a>
-                <a class="nav-item nav-link" id="nav-notes-tab" data-toggle="tab" href="#nav-notes" role="tab" aria-controls="nav-notes" aria-selected="false">Notes</a>
-                <a class="nav-item nav-link" id="nav-credentials-tab" data-toggle="tab" href="#nav-credentials" role="tab" aria-controls="nav-credentials" aria-selected="false">Credentials</a>
+                <a class="nav-item nav-link active" id="nav-items-tab" data-toggle="tab" href="#nav-items" role="tab" aria-controls="nav-times" aria-selected="true">Items</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade" id="nav-items" role="tabpanel" aria-labelledby="nav-notes-tab">
-                <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showItemModal()">
+            <div class="tab-pane fade show active" id="nav-items" role="tabpanel" aria-labelledby="nav-items-tab">
+                <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showItemModal();">
                     + Add a New Item
                 </button>
 
                 <div class="table-responsive">
-                    <table class="table table-striped" id="userTable">
+                    <table class="table table-striped" id="itemTable">
                         <thead>
                         <tr>
-                            <th style="width: 20%" scope="col"></th>
-                            <th style="width: 20%" scope="col">Title</th>
-                            <th style="width: 60%" scope="col">Description</th>
+                            <th style="width: 20%" scope="col">Image</th>
+                            <th style="width: 20%" scope="col">Product Name</th>
+                            <th style="width: 40%" scope="col">Product Description</th>
+                            <th style="width: 20%" scope="col">Add to Cart <i class="fas fa-cart-plus"></i></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="note : ${notesList}">
-                            <td>
-                                <button type="button" class="btn btn-success"
-                                        th:attr="data-id=${note.noteId}, data-title=${note.noteTitle}, data-desc=${note.noteDescription}"
-                                        th:onclick="showEditNoteModal(this.getAttribute('data-id'), this.getAttribute('data-title'), this.getAttribute('data-desc'));">Edit</button>
+                        <tr >
 
-                                <a class="btn btn-danger"
-                                   th:href="@{/home/delete/notes/{noteId}(noteId=${note.noteId})}">Delete</a>
+                            <td><img src="" ></td>
+                            <th scope="row" >Example Note Title</th>
+                            <td>Example Note Description </td>
+                            <td>
+                                <button type="button" class="btn btn-success" onclick="showEditItemModal();">Edit Item</button>
                             </td>
-                            <th scope="row" th:text="${note.noteTitle}">Example Note Title</th>
-                            <td th:text="${note.noteDescription}">Example Note Description </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
+                <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="noteModalLabel">Note</h5>
+                                <h5 class="modal-title" id="itemModalLabel">Product</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="#" method="POST" th:action="@{/home/notes}">
-                                    <input type="hidden" name="noteId" id="note-id">
+                                <form action="#" method="POST">
+                                    <input type="hidden" name="itemId" id="item-id">
                                     <div class="form-group">
-                                        <label for="note-title" class="col-form-label">Title</label>
-                                        <input type="text" name= "noteTitle" class="form-control" id="note-title" maxlength="20" required>
+                                        <label for="item-name" class="col-form-label">Name</label>
+                                        <input type="text" name= "itemName" class="form-control" id="item-name" maxlength="20" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="note-description" class="col-form-label">Description</label>
-                                        <textarea class="form-control" name="noteDescription" id="note-description" rows="5" maxlength="1000"  required></textarea>
+                                        <label for="item-description" class="col-form-label">Description</label>
+                                        <textarea class="form-control" name="itemDescription" id="item-description" rows="5" maxlength="1000"  required></textarea>
                                     </div>
-                                    <button id="noteSubmit" type="submit" class="d-none"></button>
+                                    <div class="form-group">
+                                        <label for="item-image" class="col-form-label">Upload Product Image</label>
+                                        <input type="file" name="itemImage" id="item-image" class="form-control-file">
+                                        <small>Max size 3MB</small>
+                                    </div>
+                                    <button id="itemSubmit" type="submit" class="d-none"></button>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
+                                <button type="button" class="btn btn-primary" onclick="$('#itemSubmit').click();">Save changes</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="modal fade" id="editNoteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="editItemModalLabel">Products</h5>
+                                <h5 class="modal-title" id="editNoteModalLabel">Note</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="#" method="PUT" th:action="@{/home/edit/notes/{editNoteId}(editNoteId=${editNoteId})}">
-                                    <input type="hidden" name="noteId" id="editNote-id" th:value="${editNoteId}">
+                                <form action="#" method="PUT" >
+                                    <input type="hidden" name="itemId" id="editItem-id">
                                     <div class="form-group">
-                                        <label for="note-title" class="col-form-label">Title</label>
-                                        <input type="text" name= "itemTitle" class="form-control" id="editItem-title" maxlength="20" required>
+                                        <label for="editItem-name" class="col-form-label">Title</label>
+                                        <input type="text" name= "itemName" class="form-control" id="editItem-name" maxlength="20" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="note-description" class="col-form-label">Description</label>
+                                        <label for="editItem-description" class="col-form-label">Description</label>
                                         <textarea class="form-control" name="itemDescription" id="editItem-description" rows="5" maxlength="1000"  required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editItem-image" class="col-form-label">Upload Product Image</label>
+                                        <input type="file" name="itemImage" id="editItem-image" class="form-control-file">
+                                        <small>Max size 3MB</small>
                                     </div>
                                     <button id="editItemSubmit" type="submit" class="d-none"></button>
                                 </form>
@@ -121,27 +134,33 @@
     </div>
 </div>
 
-<script th:src="@{/js/jquery-slim.min.js}"></script>
-<script th:src="@{/js/popper.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
+<!-- Optional JavaScript -->
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
 
 <!--For opening the note modal-->
 <script type="text/javascript">
-            // For opening the note modal
-            function showItemModal(itemId, itemName, itemDescription) {
-                $('#note-id').val(noteId ? noteId : '');
-                $('#note-title').val(noteTitle ? noteTitle : '');
-                $('#note-description').val(noteDescription ? noteDescription : '');
-                $('#noteModal').modal('show');
+    // For opening the note modal
+    function showItemModal(itemId, itemName, itemDescription) {
+                $('#item-id').val(itemId ? itemId : '');
+                $('#item-name').val(itemName ? itemName : '');
+                $('#item-description').val(itemDescription ? itemDescription : '');
+                $('#itemModal').modal('show');
+       }
+
+    function showEditItemModal(itemId, itemName, itemDescription) {
+                $('#editItem-id').val(itemId);
+                $('#editItem-name').val(itemName);
+                $('#editItem-description').val(itemDescription);
+                $('#editItemModal').modal('show');
             }
 
-            function showEditNoteModal(noteId, noteTitle, noteDescription) {
-                $('#editNote-id').val(noteId);
-                $('#editNote-title').val(noteTitle);
-                $('#editNote-description').val(noteDescription);
-                $('#editNoteModal').modal('show');
-            }
-
-        </script>
+</script>
 </body>
 </html>

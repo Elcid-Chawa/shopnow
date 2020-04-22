@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+    <title>Login</title>
+</head>
+<body>
+    <div class="container justify-content-center w-25" style="margin-top: 5em;">
+        <!-- Card -->
+        <div class="">
+
+            <div class="pt-4 pb-3">
+
+                <h5 class="text-center mt-1 mb-4">Sign In</h5>
+
+                <form action="#!" method="POST" th:action="@{/login}">
+
+                    <div class="alert alert-danger" th:if="${param.error}">
+                        Invalid username or password
+                    </div>
+                    <div class="alert alert-dark" th:if="${param.logout}" >
+                        You have been logged out
+                    </div>
+
+                    <div class="md-form md-outline">
+                        <label data-error="wrong" data-success="right" for="username">Username</label>
+                        <input type="input" name="username" id="username" class="form-control" placeholder="Enter Username" maxlength="20" required>
+                    </div>
+                    <div class="md-form md-outline">
+                        <label data-error="wrong" data-success="right" for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password" maxlength="20" required>
+                    </div>
+
+                    <button id="userSubmit" type="submit" class="d-none"></button>
+
+                </form>
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+
+                    <div class="form-check pl-0 mb-3">
+                        <input type="checkbox" class="form-check-input filled-in" id="new">
+                        <label class="form-check-label small text-uppercase card-link-secondary" for="new">Remember me</label>
+                    </div>
+
+                    <p><a href="">Forgot password?</a></p>
+
+                </div>
+
+                <div class="text-center pb-2">
+
+                    <button type="submit" class="btn btn-primary mb-4" onclick="$('#userSubmit').click();">Sign in</button>
+
+                    <p>Not a member? <a href="" th:href="@{/signup}">Register</a></p>
+
+                    <p>or sign in with:</p>
+
+                    <a type="button" class="btn-floating btn-fb btn-sm mr-1">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a type="button" class="btn-floating btn-tw btn-sm mr-1">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a type="button" class="btn-floating btn-li btn-sm mr-1">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a type="button" class="btn-floating btn-git btn-sm">
+                        <i class="fab fa-github"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Card -->
+    </div>
+<!-- Optional JavaScript -->
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+</body>
+</html>

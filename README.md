@@ -1,2 +1,2 @@
-# shopnow
-This is my e-copmmerce shopping app
+# SHOP NOW
+This is my e-commerce shopping app

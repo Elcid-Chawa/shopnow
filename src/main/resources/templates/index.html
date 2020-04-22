@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+
+    <style>
+        ul#someList li {
+            display: inline;
+            text-align: center;
+        }
+    </style>
 
     <title>SHOPNOW</title>
 </head>
@@ -29,15 +43,17 @@
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
+                </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link waves-effect" href="#" tabindex="-1" aria-disabled="true" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="jumbotron">
             <h1 class="display-4">Welcome to your world of Shopping!</h1>
             <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
@@ -56,26 +72,80 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${items}">
+                <tr>
 
-                    <td><img src="" th:src="${item.image}"></td>
-                    <th scope="row" th:text="${note.noteTitle}">Example Note Title</th>
-                    <td th:text="${item.itemDescription}">Example Note Description </td>
+                    <td><img src="" ></td>
+                    <th scope="row">Example Note Title</th>
+                    <td>Example Note Description </td>
                     <td>
-                        <button type="button" class="btn btn-success"
-                                th:attr="data-id=${item.itemId}, data-title=${item.itemName}, data-desc=${item.itemDescription}"
-                                th:onclick="addToCart(this.getAttribute('data-id'), this.getAttribute('data-title'), this.getAttribute('data-desc'));">Add to Cart</button>
+                        <button type="button" class="btn btn-success"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
+
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <!-- Card -->
+                <div class="">
+                    <div class="view zoom overlay z-depth-2 rounded">
+                        <img class="img-fluid w-100"
+                             src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg" alt="Sample">
+                        <a href="#!">
+                            <div class="mask">
+                                <img class="img-fluid w-100"
+                                     src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg"><div class="mask rgba-black-slight"></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="text-center pt-4">
+
+                        <h5>Fantasy T-shirt</h5>
+                        <p class="mb-2 text-muted text-uppercase small">Shirts</p>
+                        <ul class="rating" style="list-style-type: none;" id="someList">
+                                <li>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star fa-sm text-primary"></i>
+                                </li>
+                            </ul>
+                        <hr>
+                        <h6 class="mb-3">12.99 $</h6>
+                        <button type="button" class="btn btn-primary btn-sm mr-1 mb-2"><i
+                                    class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
+                        <button type="button" class="btn btn-light btn-sm mr-1 mb-2"><i
+                                    class="fas fa-info-circle pr-2"></i>Details</button>
+                        <button type="button" class="btn btn-danger btn-sm px-3 mb-2 material-tooltip-main" data-toggle="tooltip"
+                                data-placement="top" title="Add to wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <!-- Card -->
+            </div>
+        </div>
+
     </div>
 
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
 </body>
 </html>
