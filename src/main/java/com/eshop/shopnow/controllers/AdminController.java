@@ -1,8 +1,16 @@
 package com.eshop.shopnow.controllers;
 
+import com.eshop.shopnow.mapper.AdminMapper;
+import com.eshop.shopnow.mapper.ItemMapper;
+import com.eshop.shopnow.mapper.UserMapper;
+import com.eshop.shopnow.models.Admins;
+import com.eshop.shopnow.models.Items;
 import com.eshop.shopnow.models.Users;
 import com.eshop.shopnow.services.HashService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,9 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.List;
 
 @Controller
 public class AdminController {
+
+    @Autowired UserMapper userMapper;
+    @Autowired AdminMapper adminMapper;
+    @Autowired ItemMapper itemMapper;
+
     @RequestMapping(value = "/")
     public String defaultView(){
         return "index";
@@ -47,11 +61,15 @@ public class AdminController {
 
         users.setPassword(hashPassword);
 
+        userMapper.createUser(users);
+
         return "redirect:/signup?success";
     }
 
-    @RequestMapping(value = "/admin")
-    public String adminPage(){
+    @RequestMapping(value = {"/admin", "/product"})
+    public String adminPage(Model model){
+        List<Items> allItems = itemMapper.findAllItems();
+        model.addAttribute("items", allItems);
         return "admin";
     }
 
@@ -61,19 +79,24 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/login", method= RequestMethod.POST)
-    public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password
-    ){
+    public String loginUser(@RequestParam("username") String username,
+                            @RequestParam("password") String password){
+        Admins admin = adminMapper.findByUsername(username);
+        if(username.equals(admin.getUsername())) {
+            return "redirect:/admin";
+        } else {
 
+            Users user = userMapper.findByUsername(username);
 
-        //if (authenticationProvider.authorizeUser(username, password, userRepository)){
+            HashService hashService = new HashService();
+            String encoded = hashService.getHashedValue(password, user.getSalt());
 
-            //System.out.print(session.getId());
-            //session.setAttribute("userid", userid);
-            return "redirect:/home";
-        //} else {
-            //return "redirect:/login?error";
-        //}
-
+            if (username.equals(user.getUsername()) && encoded.equals(user.getPassword())) {
+                return "redirect:/home";
+            } else {
+                return "redirect:/login?error";
+            }
+        }
     }
 
     @RequestMapping(value = "/logout")
@@ -83,6 +106,39 @@ public class AdminController {
 
     @RequestMapping(value = "/home")
     public String homePage(){
+        return "home";
+    }
+
+    @RequestMapping(value = "/product", method = RequestMethod.POST)
+    public String addItem(Authentication authentication,
+                          @RequestParam("itemName") String itemName,
+                          @RequestParam("itemDescription") String itemDescription,
+                          @RequestParam("itemPrice") Float itemPrice,
+                          @RequestParam("imageUrl") String imageUrl){
+
+        String adminName = authentication.getName();
+        Admins admin = adminMapper.findByUsername(adminName);
+
+        Items items = new Items();
+
+        items.setAdminId(admin.getAdminid());
+        items.setItemName(itemName);
+        items.setItemDescription(itemDescription);
+        items.setPrice(itemPrice);
+        items.setImageUrl(imageUrl);
+
+        itemMapper.createItem(items);
+
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/cart")
+    public String showCart(){
+        return "cart";
+    }
+
+    @RequestMapping(value = "/cart/items", method = RequestMethod.POST)
+    public String addToCart(){
         return "home";
     }
 

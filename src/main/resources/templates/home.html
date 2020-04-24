@@ -43,14 +43,19 @@
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
-            </li>
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                    <i class="fas fa-user-circle"></i>
+                <a href="#!" class="nav-link navbar-link-2 waves-effect" th:href="@{/cart}">
+                    <span class="badge badge-pill red">1</span>
+                    <i class="fas fa-shopping-cart pl-0"></i>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link waves-effect" href="#" tabindex="-1" aria-disabled="true" th:href="@{/logout}">Logout</a>
+                    <a href="#!" th:href="@{/cart}" class="nav-link navbar-link-2 waves-effect"><i class="fas fa-user-circle"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-effect" href="#" tabindex="-1"  th:href="@{/logout}">Logout</a>
             </li>
         </ul>
     </div>
@@ -64,6 +69,8 @@
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
         <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
     </div>
+    <span><i
+            class="fas fa-shopping-cart pr-2"></i></span>
     <div class="table-responsive">
         <table class="table table-striped" id="itemTable">
             <thead>
@@ -127,7 +134,7 @@
                     </ul>
                     <hr>
                     <h6 class="mb-3">12.99 $</h6>
-                    <button type="button" class="btn btn-primary btn-sm mr-1 mb-2"><i
+                    <button type="button" class="btn btn-primary btn-sm mr-1 mb-2" onclick="showCartModal()"><i
                             class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
                     <button type="button" class="btn btn-light btn-sm mr-1 mb-2"><i
                             class="fas fa-info-circle pr-2"></i>Details</button>
@@ -136,6 +143,98 @@
                 </div>
             </div>
             <!-- Card -->
+        </div>
+    </div>
+
+    <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Add to Cart</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-0">
+                        <div class="col-md-5 col-lg-3 col-xl-3">
+                            <div class="view zoom overlay z-depth-2 rounded mb-2 mb-md-0">
+                                <img class="img-fluid w-100"
+                                     src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg" alt="Sample">
+                                <a href="#!">
+                                    <div class="mask waves-effect waves-light">
+                                        <img class="img-fluid w-100"
+                                             src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg">
+                                        <div class="mask rgba-black-slight waves-effect waves-light"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-lg-9 col-xl-9">
+                            <div>
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h5>Blue denim shirt</h5>
+                                        <p class="mb-0 text-muted text-uppercase small">Shirt - blue</p>
+                                        <p class="mb-0 text-muted text-uppercase small">Color: blue</p>
+                                        <p class="mb-0 text-muted text-uppercase small">Size: M</p>
+                                    </div>
+                                    <div>
+                                        <div class="def-number-input number-input safari_only mb-0 w-100">
+                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                    class="minus"></button>
+                                            <input class="quantity" min="0" name="quantity" value="1" type="number">
+                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                    class="plus"></button>
+                                        </div>
+                                        <small id="passwordHelpBlock" class="form-text text-muted text-center">
+                                            (Note, 1 piece)
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="#!" type="button" class="card-link-secondary small text-uppercase mr-3"><i
+                                                class="fas fa-trash-alt mr-1"></i> Remove item </a>
+                                        <a href="#!" type="button" class="card-link-secondary small text-uppercase"><i
+                                                class="fas fa-heart mr-1"></i> Move to wish list </a>
+                                    </div>
+                                    <p class="mb-0"><span><strong>$17.99</strong></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="#" method="POST" th:action="@{/cart/items}">
+                        <input type="hidden" name="cartid" id="cart-id">
+                        <input type="hidden" name="itemid" id="item-id">
+                        <div class="form-group">
+                            <label for="item-name" class="col-form-label">Name</label>
+                            <input type="text" name= "itemName" class="form-control" id="item-name" maxlength="20" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-description" class="col-form-label">Description</label>
+                            <textarea class="form-control" name="itemDescription" id="item-description" rows="5" maxlength="1000"  required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-quantity" class="col-form-label">Quantity</label>
+                            <input type="number" name= "quantity" class="form-control" id="item-quantity" maxlength="9" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-price" class="col-form-label">Unit Price</label>
+                            <input type="number" name= "itemPrice" class="form-control" id="item-price" maxlength="9" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-image" class="col-form-label">Product Image URL</label>
+                            <input type="text" name="imageUrl" id="item-image" class="form-control" maxlength="100">
+                        </div>
+                        <button id="cartSubmit" type="submit" class="d-none"></button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="$('#cartSubmit').click();">Add</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -150,5 +249,14 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+
+<!--For opening the note modal-->
+<script type="text/javascript">
+    // For opening the note modal
+    function showCartModal() {
+                $('#cartModal').modal('show');
+       }
+
+</script>
 </body>
 </html>

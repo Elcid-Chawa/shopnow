@@ -1,10 +1,7 @@
 package com.eshop.shopnow.mapper;
 
 import com.eshop.shopnow.models.Users;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -12,7 +9,7 @@ import java.util.List;
 public interface UserMapper {
 
     @Select("SELECT * from USERS " +
-            "WHERE userid=#{usersid}")
+            "WHERE username=#{username}")
     @Results({
             @Result(property = "userid", column = "userid"),
             @Result(property = "username", column = "username"),
@@ -21,5 +18,13 @@ public interface UserMapper {
             @Result(property = "salt", column = "salt"),
             @Result(property = "password", column = "password")
     })
-    List<Users> findByUserId(int userid);
+    Users findByUsername(String username);
+
+    @Insert("INSERT into USERS(userid, username, firstname, lastname, salt, password) " +
+            "VALUES(#{userid}, #{username}, #{firstname}, #{lastname}, #{salt}, #{password})")
+    @Options(useGeneratedKeys = true, keyProperty = "userid")
+    void createUser(Users user);
+
+    @Delete("DELETE from USERS where userid=#{userid}")
+    void deleteUser(int userid);
 }

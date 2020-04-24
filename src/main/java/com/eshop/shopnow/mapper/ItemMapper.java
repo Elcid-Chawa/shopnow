@@ -12,20 +12,31 @@ public interface ItemMapper {
     @Results({
             @Result(property = "itemid", column = "itemid" ),
             @Result(property = "itemName", column = "itemName"),
-            @Result(property = "ItemDescription", column = "itemDescription"),
+            @Result(property = "itemDescription", column = "itemDescription"),
             @Result(property = "price", column = "price"),
-            @Result(property = "itemImage", column = "itemImage"),
-            @Result(property = "adminid", column = "adminId")
+            @Result(property = "imageUrl", column = "imageUrl"),
+            @Result(property = "adminid", column = "adminid")
     })
     List<Items> findByItemId(int itemid);
 
-    @Insert("INSERT INTO ITEMS (itemid, itemName, itemDescription, price, itemImage, adminid) " +
-            "VALUES (#{itemid}, #{itemName}, #{itemDescription}, #{price}, #{itemImage}, #{adminid})")
+    @Select("SELECT * FROM ITEMS")
+    @Results({
+            @Result(property = "itemid", column = "itemid" ),
+            @Result(property = "itemName", column = "itemName"),
+            @Result(property = "itemDescription", column = "itemDescription"),
+            @Result(property = "price", column = "price"),
+            @Result(property = "imageUrl", column = "imageUrl"),
+            @Result(property = "adminid", column = "adminid")
+    })
+    List<Items> findAllItems();
+
+    @Insert("INSERT INTO ITEMS (itemid, itemName, itemDescription, price, imageUrl, adminid) " +
+            "VALUES (#{itemid}, #{itemName}, #{itemDescription}, #{price}, #{imageUrl}, #{adminid})")
     @Options(useGeneratedKeys = true, keyProperty = "itemid")
     void createItem(Items items);
 
     @Update("UPDATE ITEMS SET itemid=#{itemid}, itemName=#{itemName}, itemDescription=#{itemDescription}, " +
-            "price=#{price}, itemImage= #{itemImage}, adminid= #{adminid}")
+            "price=#{price}, imageUrl= #{imageUrl}, adminid= #{adminid}")
     @Options(useGeneratedKeys = true, keyProperty = "itemid")
     void updateItem(Items items);
 
