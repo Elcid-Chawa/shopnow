@@ -17,7 +17,7 @@ public interface ItemMapper {
             @Result(property = "imageUrl", column = "imageUrl"),
             @Result(property = "adminid", column = "adminid")
     })
-    List<Items> findByItemId(int itemid);
+    Items findByItemId(int itemid);
 
     @Select("SELECT * FROM ITEMS")
     @Results({
@@ -35,10 +35,9 @@ public interface ItemMapper {
     @Options(useGeneratedKeys = true, keyProperty = "itemid")
     void createItem(Items items);
 
-    @Update("UPDATE ITEMS SET itemid=#{itemid}, itemName=#{itemName}, itemDescription=#{itemDescription}, " +
+    @Update("UPDATE ITEMS SET itemName=#{itemName}, itemDescription=#{itemDescription}, " +
             "price=#{price}, imageUrl= #{imageUrl}, adminid= #{adminid}")
-    @Options(useGeneratedKeys = true, keyProperty = "itemid")
-    void updateItem(Items items);
+     void updateItem(Items items);
 
     @Delete("DELETE from ITEMS where itemid=#{itemid}")
     void deleteItem(int itemid);

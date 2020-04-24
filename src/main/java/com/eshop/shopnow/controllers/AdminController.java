@@ -132,6 +132,38 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @RequestMapping(value = "/admin/edit/item/", method = {RequestMethod.GET, RequestMethod.PUT})
+    public String editItem(Authentication authentication,
+                           @RequestParam("itemId") String itemid,
+                           @RequestParam("itemName") String itemName,
+                           @RequestParam("itemDescription") String itemDescription,
+                           @RequestParam("itemPrice") String price,
+                           @RequestParam("imageUrl") String imageUrl){
+
+        try {
+            String adminName = authentication.getName();
+            Admins admins = adminMapper.findByUsername(adminName);
+
+            Integer itemId = Integer.parseInt(itemid);
+            Float itemPrice = Float.parseFloat(price);
+
+            Integer adminid = admins.getAdminid();
+
+            Items item = itemMapper.findByItemId(itemId);
+
+            item.setItemName(itemName);
+            item.setItemDescription(itemDescription);
+            item.setPrice(itemPrice);
+            item.setImageUrl(imageUrl);
+            item.setAdminId(adminid);
+
+            itemMapper.updateItem(item);
+        } catch (Exception e){return "redirect/:login?error";}
+
+
+        return "redirect:/admin";
+    }
+
     @RequestMapping(value = "/cart")
     public String showCart(){
         return "cart";

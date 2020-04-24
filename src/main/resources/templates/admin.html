@@ -85,21 +85,25 @@
                         <tbody>
                         <tr th:each="item : ${items}">
 
-                            <td><div class="view zoom overlay z-depth-2 rounded">
-                                <img class="img-fluid w-100"
-                                     alt="Sample" th:src="${item.imageUrl}">
-                                <a href="#!">
-                                    <div class="mask">
-                                        <img class="img-fluid w-100"
-                                             th:src="${item.imageUrl}" ><div class="mask rgba-black-slight"></div>
-                                    </div>
-                                </a>
-                            </div><img src="" class=""></td>
+                            <td>
+                                <div class="view zoom overlay z-depth-2 rounded">
+                                    <img class="img-fluid w-100"
+                                         alt="Sample" th:src="${item.imageUrl}">
+                                    <a href="#!">
+                                        <div class="mask">
+                                            <img class="img-fluid w-100"
+                                                 th:src="${item.imageUrl}" ><div class="mask rgba-black-slight"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
                             <th scope="row" th:text="${item.itemName}">Example Note Title</th>
                             <td th:text="${item.itemDescription}">Example Note Description </td>
                             <td th:text="'$ '+${item.price}">Price</td>
                             <td>
-                                <button type="button" class="btn btn-success" onclick="showEditItemModal();">Edit Item</button>
+                                <button type="button" class="btn btn-success"
+                                        th:attr="data-id=${item.itemid}, data-name=${item.itemName}, data-desc=${item.itemDescription}, data-price=${item.price}, data-img=${item.imageUrl}"
+                                        th:onclick="showEditItemModal(this.getAttribute('data-id'), this.getAttribute('data-name'),  this.getAttribute('data-desc'),  this.getAttribute('data-price'),  this.getAttribute('data-img'));">Edit Item</button>
                             </td>
                         </tr>
                         </tbody>
@@ -155,8 +159,9 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="#" method="PUT" >
-                                    <input type="hidden" name="itemId" id="editItem-id">
+                                <form action="#" method="PUT" th:action="@{/admin/edit/item/{editItemId}(editItemId=${editItemId})}">
+                                    <input type="hidden" name="itemId" id="editItem-id" th:value="${editItemId}">
+
                                     <div class="form-group">
                                         <label for="editItem-name" class="col-form-label">Name</label>
                                         <input type="text" name= "itemName" class="form-control" id="editItem-name" maxlength="20" required>
@@ -171,7 +176,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="editItem-image" class="col-form-label">Product Image URL</label>
-                                        <input type="text" name="imageUrl" id="editItem-image" class="form-control" maxlength="100">
+                                        <input type="text" name="imageUrl" id="editItem-image" class="form-control mb-2" maxlength="100" th:value="${imgurl}">
+                                        <div class="mask col-md-5">
+                                            <img id="imgDiv"  class="img-fluid w-100"><div class="mask rgba-black-slight"></div>
+                                        </div>
                                     </div>
                                     <button id="editItemSubmit" type="submit" class="d-none"></button>
                                 </form>
@@ -216,6 +224,7 @@
                 $('#editItem-description').val(itemDescription);
                 $('#editItem-price').val(itemPrice ? itemPrice : '');
                 $('#editItem-image').val(itemImage ? itemImage : '');
+                document.getElementById('imgDiv').src=itemImage;
                 $('#editItemModal').modal('show');
             }
 

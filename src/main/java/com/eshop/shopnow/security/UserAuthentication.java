@@ -36,17 +36,18 @@ public class UserAuthentication implements AuthenticationProvider {
                 return new UsernamePasswordAuthenticationToken(user, password, Collections.emptyList());
             }
         } catch (NullPointerException e){
-            String uname = users.getUsername();
-            if(user.equals(uname) ){
+            try {String uname = users.getUsername();
+                if(user.equals(uname) ){
 
-                String salt = users.getSalt();
-                HashService hashService = new HashService();
-                String hashPassword = hashService.getHashedValue(password, salt);
+                    String salt = users.getSalt();
+                    HashService hashService = new HashService();
+                    String hashPassword = hashService.getHashedValue(password, salt);
 
-                if(hashPassword.equals(users.getPassword())){
-                    return new UsernamePasswordAuthenticationToken(user, password, Collections.emptyList());
+                    if(hashPassword.equals(users.getPassword())){
+                        return new UsernamePasswordAuthenticationToken(user, password, Collections.emptyList());
+                    }
                 }
-            }
+            }catch(NullPointerException ex){throw new BadCredentialsException("External system authentication failed");}
 
 
         }
