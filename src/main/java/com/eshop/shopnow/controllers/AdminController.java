@@ -33,7 +33,11 @@ public class AdminController {
     @Autowired CartMapper cartMapper;
 
     @RequestMapping(value = "/")
-    public String defaultView(){
+    public String defaultView(Model model){
+        List<Items> items = itemMapper.findAllItems();
+
+        model.addAttribute("items", items);
+
         return "index";
     }
 

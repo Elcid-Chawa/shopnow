@@ -13,7 +13,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
 
     <style>
-        ul#someList li {
+        ul.someList li {
             display: inline;
             text-align: center;
         }
@@ -21,37 +21,83 @@
 
     <title>SHOPNOW</title>
 </head>
-<body data-gr-c-s-loaded="true">
+<body class="skin-light" screen_capture_injected="true" data-gr-c-s-loaded="true" aria-busy="true">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">SHOP NOW</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <header>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Product</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link waves-effect" href="#" tabindex="-1" aria-disabled="true" th:href="@{/login}">Login</a>
-                </li>
-            </ul>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top scrolling-navbar navbar-transparent">
+
+            <div class="container-fluid">
+
+                <!-- Brand -->
+                <a class="navbar-brand" href="https://mdbecommerce.com/">
+                    <i class="fab fa-mdb fa-3x" alt="mdb logo"></i>
+                </a>
+
+                <!-- Collapse button -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Links -->
+                <div class="collapse navbar-collapse" id="basicExampleNav">
+
+                    <!-- Right -->
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#!" class="nav-link navbar-link-2 waves-effect">
+                                <span class="badge badge-pill red">1</span>
+                                <i class="fas fa-shopping-cart pl-0"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect" id="navbarDropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <i class="united kingdom flag m-0"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item waves-effect waves-light" href="#!">Action</a>
+                                <a class="dropdown-item waves-effect waves-light" href="#!">Another action</a>
+                                <a class="dropdown-item waves-effect waves-light" href="#!">Something else here</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#!" class="nav-link waves-effect">
+                                Shop
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#!" class="nav-link waves-effect">
+                                Contact
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#!" class="nav-link waves-effect">
+                                Sign in
+                            </a>
+                        </li>
+                        <li class="nav-item pl-2 mb-2 mb-md-0">
+                            <a href="#!" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Sign
+                                up</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- Links -->
+            </div>
+
+        </nav>
+        <!-- Navbar -->
+
+        <div class="jumbotron jumbotron-image color-grey-light" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/clothes(4)-crop.jpg'); height: 400px;">
+            <div class="mask rgba-black-strong d-flex align-items-center h-100">
+                <div class="container text-center white-text py-5">
+                    <h1 class="mb-0">eCommerce HomePage</h1>
+                </div>
+            </div>
         </div>
-    </nav>
+
+    </header>
 
     <div class="container">
         <div class="jumbotron">
@@ -212,50 +258,30 @@
 
         </section>
 
-        <div class="table-responsive">
-            <table class="table table-striped" id="itemTable">
-                <thead>
-                <tr>
-                    <th style="width: 20%" scope="col">Image</th>
-                    <th style="width: 20%" scope="col">Product Name</th>
-                    <th style="width: 40%" scope="col">Product Description</th>
-                    <th style="width: 20%" scope="col">Add to Cart</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
+        <section>
+            <h4 class="text-center mt-4 mb-5">
+                <strong>Best Deals</strong>
+            </h4>
+            <div class="row">
+                <div class="col-md-4 mb-3" th:each="item : ${items}">
+                    <!-- Card -->
+                    <div class="card">
+                        <div class="view zoom overlay z-depth-2 rounded">
+                            <img class="img-fluid w-100"
+                                 th:src="${item.imageUrl}" alt="Sample">
+                            <a href="#!">
+                                <div class="mask">
+                                    <img class="img-fluid w-100"
+                                         src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg"><div class="mask rgba-black-slight"></div>
+                                </div>
+                            </a>
+                        </div>
 
-                    <td><img src="" ></td>
-                    <th scope="row">Example Note Title</th>
-                    <td>Example Note Description </td>
-                    <td>
-                        <button type="button" class="btn btn-success"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+                        <div class="text-center pt-4">
 
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <!-- Card -->
-                <div class="">
-                    <div class="view zoom overlay z-depth-2 rounded">
-                        <img class="img-fluid w-100"
-                             src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg" alt="Sample">
-                        <a href="#!">
-                            <div class="mask">
-                                <img class="img-fluid w-100"
-                                     src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg"><div class="mask rgba-black-slight"></div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="text-center pt-4">
-
-                        <h5>Fantasy T-shirt</h5>
-                        <p class="mb-2 text-muted text-uppercase small">Shirts</p>
-                        <ul class="rating" style="list-style-type: none;" id="someList">
+                            <h5 th:text="${item.itemName}">Fantasy T-shirt</h5>
+                            <p class="mb-2 text-muted text-uppercase small">Shirts</p>
+                            <ul class="rating someList" style="list-style-type: none;">
                                 <li>
                                     <i class="fas fa-star fa-sm text-primary"></i>
                                 </li>
@@ -272,30 +298,188 @@
                                     <i class="fas fa-star fa-sm text-primary"></i>
                                 </li>
                             </ul>
-                        <hr>
-                        <h6 class="mb-3">12.99 $</h6>
-                        <button type="button" class="btn btn-primary btn-sm mr-1 mb-2"><i
-                                    class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
-                        <button type="button" class="btn btn-light btn-sm mr-1 mb-2"><i
+                            <hr>
+                            <h6 class="mb-3" th:text="${item.price}">12.99 $</h6>
+                            <a type="button" class="btn btn-primary btn-sm mr-1 mb-4"
+                                    th:href="@{/login}"><i
+                                    class="fas fa-shopping-cart pr-2"></i>Add to cart</a>
+                            <button type="button" class="btn btn-light btn-sm mr-1 mb-4"><i
                                     class="fas fa-info-circle pr-2"></i>Details</button>
-                        <button type="button" class="btn btn-danger btn-sm px-3 mb-2 material-tooltip-main" data-toggle="tooltip"
-                                data-placement="top" title="Add to wishlist"><i class="far fa-heart"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm px-3 mb-4 material-tooltip-main" data-toggle="tooltip"
+                                    data-placement="top" title="Add to wishlist"><i class="far fa-heart"></i></button>
+                        </div>
                     </div>
+                    <!-- Card -->
                 </div>
-                <!-- Card -->
             </div>
-        </div>
+        </section>
 
     </div>
 
+    <footer class="page-footer font-small elegant-color">
+
+        <div class="color-primary">
+            <div class="container">
+
+                <!-- Grid row-->
+                <div class="row py-4 d-flex align-items-center">
+
+                    <!-- Grid column -->
+                    <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+                        <h6 class="mb-0">Get connected with us on social networks!</h6>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+                        <!-- Facebook -->
+                        <a class="fb-ic">
+                            <i class="fab fa-facebook-f white-text mr-4"> </i>
+                        </a>
+                        <!-- Twitter -->
+                        <a class="tw-ic">
+                            <i class="fab fa-twitter white-text mr-4"> </i>
+                        </a>
+                        <!-- Google +-->
+                        <a class="gplus-ic">
+                            <i class="fab fa-google-plus-g white-text mr-4"> </i>
+                        </a>
+                        <!--Linkedin -->
+                        <a class="li-ic">
+                            <i class="fab fa-linkedin-in white-text mr-4"> </i>
+                        </a>
+                        <!--Instagram-->
+                        <a class="ins-ic">
+                            <i class="fab fa-instagram white-text"> </i>
+                        </a>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row-->
+
+            </div>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="container text-center text-md-left pt-4 pt-md-5">
+
+            <!-- Grid row -->
+            <div class="row mt-1 mt-md-0 mb-4 mb-md-0">
+
+                <!-- Grid column -->
+                <div class="col-md-3 mx-auto mt-3 mt-md-0 mb-0 mb-md-4">
+
+                    <!-- Links -->
+                    <h5>About me</h5>
+                    <hr class="color-primary mb-4 mt-0 d-inline-block mx-auto w-60">
+
+                    <p class="foot-desc mb-0">Here you can use rows and columns to organize your footer content. Lorem
+                        ipsum dolor sit amet,
+                        consectetur
+                        adipisicing elit.</p>
+
+                </div>
+                <!-- Grid column -->
+
+                <hr class="clearfix w-100 d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-3 mx-auto mt-3 mt-md-0 mb-0 mb-md-4">
+
+                    <!-- Links -->
+                    <h5>Products</h5>
+                    <hr class="color-primary mb-4 mt-0 d-inline-block mx-auto w-60">
+
+                    <ul class="list-unstyled foot-desc">
+                        <li class="mb-2">
+                            <a href="#!">MDBootstrap</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#!">MDWordPress</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#!">BrandFlow</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#!">Bootstrap Angular</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- Grid column -->
+
+                <hr class="clearfix w-100 d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-3 mx-auto mt-3 mt-md-0 mb-0 mb-md-4">
+
+                    <!-- Links -->
+                    <h5>Useful links</h5>
+                    <hr class="color-primary mb-4 mt-0 d-inline-block mx-auto w-60">
+
+                    <ul class="list-unstyled foot-desc">
+                        <li class="mb-2">
+                            <a href="#!">Your Account</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#!">Become an Affiliate</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#!">Shipping Rates</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#!">Help</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- Grid column -->
+
+                <hr class="clearfix w-100 d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-3 mx-auto mt-3 mt-md-0 mb-0 mb-md-4">
+
+                    <!-- Links -->
+                    <h5>Contacts</h5>
+                    <hr class="color-primary mb-4 mt-0 d-inline-block mx-auto w-60">
+
+                    <ul class="fa-ul foot-desc ml-4">
+                        <li class="mb-2"><span class="fa-li"><i class="far fa-map"></i></span>New York, Avenue Street 10
+                        </li>
+                        <li class="mb-2"><span class="fa-li"><i class="fas fa-phone-alt"></i></span>042 876 836 908</li>
+                        <li class="mb-2"><span class="fa-li"><i class="far fa-envelope"></i></span>company@example.com</li>
+                        <li><span class="fa-li"><i class="far fa-clock"></i></span>Monday - Friday: 10-17</li>
+                    </ul>
+
+                </div>
+                <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+        </div>
+        <!-- Footer Links -->
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a th:href="@{/home}"> SHOPNOW.com</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+
     <!-- Optional JavaScript -->
     <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/jquery-3.4.1.min.js"></script>
     <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.min.js"></script>
 </body>
 </html>
