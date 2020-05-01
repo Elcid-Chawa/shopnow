@@ -9,6 +9,7 @@ import com.eshop.shopnow.models.Cart;
 import com.eshop.shopnow.models.Items;
 import com.eshop.shopnow.models.Users;
 import com.eshop.shopnow.services.HashService;
+import com.eshop.shopnow.services.MultiValueList;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,10 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class AdminController {
@@ -132,6 +130,9 @@ public class AdminController {
         return "home";
     }
 
+    // Manage Products/Items
+
+    // Add Products
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public String addItem(Authentication authentication,
                           @RequestParam("itemName") String itemName,
@@ -155,6 +156,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    // Edit products
     @RequestMapping(value = "/admin/edit/item/", method = {RequestMethod.GET, RequestMethod.PUT})
     public String editItem(Authentication authentication,
                            @RequestParam("itemId") String itemid,
@@ -187,23 +189,31 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    // Delete Products
+    @RequestMapping(value = "admin/delete/item/{itemid}")
+    public String deleteProduct(@PathVariable("itemid") String itemid){
+        Integer item_id = Integer.parseInt(itemid);
+        itemMapper.deleteItem(item_id);
+        return "redirect:/admin";
+    }
+
+    // Manage Carts
+
     @RequestMapping(value = "/cart")
     public String showCart(Model model, Authentication authentication){
         String username = authentication.getName();
         Users user = userMapper.findByUsername(username);
 
         List<Cart> carts = cartMapper.findCartByUserId(user.getUserId());
-
-        List<Items> cartItem = new ArrayList<Items>();
+        MultiValueList multiValueList = new MultiValueList();
+        List<Object> cartItem = new ArrayList<>();
         for (Cart cart : carts){
-
-            cartItem.add(itemMapper.findByItemId(cart.getItemid()) );
+            cartItem.add(multiValueList.getDetails(itemMapper.findByItemId(cart.getItemid()), cart.getCartid() ));
         }
 
         model.addAttribute("itemsCount",cartItem.size());
+        model.addAttribute("carts", cartItem);
 
-        model.addAttribute("items", cartItem);
-        //model.addAttribute("carts");
         return "cart";
     }
 
@@ -215,6 +225,7 @@ public class AdminController {
         String username = authentication.getName();
         Users users = userMapper.findByUsername(username);
         Items items = itemMapper.findByItemId(itemid);
+
         Cart cart = new Cart();
         cart.setQuantity(quantity);
         cart.setUserid(users.getUserId());
@@ -227,5 +238,13 @@ public class AdminController {
         return "redirect:/home";
     }
 
+    @RequestMapping(value = "/cart/delete/{cartid}", method = {RequestMethod.GET, RequestMethod.DELETE})
+    public String deleteFromCart(@PathVariable("cartid") String cartid){
+        Integer cart_id = Integer.parseInt(cartid);
+        cartMapper.deleteItem(cart_id);
+        return "redirect:/cart";
+    }
+
 }
+
 

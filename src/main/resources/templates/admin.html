@@ -105,6 +105,10 @@
                                         th:attr="data-id=${item.itemid}, data-name=${item.itemName}, data-desc=${item.itemDescription}, data-price=${item.price}, data-img=${item.imageUrl}"
                                         th:onclick="showEditItemModal(this.getAttribute('data-id'), this.getAttribute('data-name'),  this.getAttribute('data-desc'),  this.getAttribute('data-price'),  this.getAttribute('data-img'));">Edit Item</button>
                             </td>
+                            <td>
+                                <a type="button" class="btn btn-danger"
+                                        th:href="@{/admin/delete/item/{itemid}(itemid=${item.itemid})}">Delete Item</a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
