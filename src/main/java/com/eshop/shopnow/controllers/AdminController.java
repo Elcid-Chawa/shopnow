@@ -194,12 +194,10 @@ public class AdminController {
 
         List<Cart> carts = cartMapper.findCartByUserId(user.getUserId());
 
-        System.out.println(carts.size());
         List<Items> cartItem = new ArrayList<Items>();
         for (Cart cart : carts){
 
-            cartItem.add(new Items("Product", "Description", Float.parseFloat("2.2"), "image") );
-            cartItem.add(new Items("Product 2", "Description 2", Float.parseFloat("2.2"), "image") );
+            cartItem.add(itemMapper.findByItemId(cart.getItemid()) );
         }
 
         model.addAttribute("itemsCount",cartItem.size());
@@ -219,7 +217,7 @@ public class AdminController {
         Items items = itemMapper.findByItemId(itemid);
         Cart cart = new Cart();
         cart.setQuantity(quantity);
-        cart.setCartid(users.getUserId());
+        cart.setUserid(users.getUserId());
         cart.setUsers(users);
         cart.setItem(items);
         cart.setItemid(items.getItemid());

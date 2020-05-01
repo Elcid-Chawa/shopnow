@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS ITEMS (
 foreign key (adminid) references ADMINS(adminid)
 );
 
-INSERT into ITEMS (itemName, itemDescription, price, imageUrl, adminid) values ('Product 1', 'Description of product', 3.0, 'https://live.staticflickr.com/65535/49665847341_cce69edece_b.jpg', 1);
+INSERT into ITEMS (itemName, itemDescription, price, imageUrl, adminid) values ('Product 1', 'Description of product', 3.0, 'https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg', 1);
 
 CREATE TABLE IF NOT EXISTS CART (
     cartid INT PRIMARY KEY auto_increment,

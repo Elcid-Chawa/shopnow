@@ -62,7 +62,7 @@ public class Cart {
     }
 
     public Integer getItemid() {
-        return this.items.getItemid();
+        return this.item_id;
     }
 
     public Integer getUserid() {
