@@ -36,7 +36,7 @@ public interface ItemMapper {
     void createItem(Items items);
 
     @Update("UPDATE ITEMS SET itemName=#{itemName}, itemDescription=#{itemDescription}, " +
-            "price=#{price}, imageUrl= #{imageUrl}, adminid= #{adminid}")
+            "price=#{price}, imageUrl= #{imageUrl} WHERE itemid=#{itemid}")
      void updateItem(Items items);
 
     @Delete("DELETE from ITEMS where itemid=#{itemid}")

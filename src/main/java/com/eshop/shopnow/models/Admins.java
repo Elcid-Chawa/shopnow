@@ -16,6 +16,7 @@ public class Admins {
     private String password;
     private String firstname;
     private String lastname;
+    private String USER_ROLE;
 
     public Admins(){}
 
@@ -26,10 +27,18 @@ public class Admins {
     public void setFirstname(String firstname){this.firstname=firstname;}
     public void setLastname(String lastname){this.lastname=lastname;}
 
+    public void setUSER_ROLE(String USER_ROLE) {
+        this.USER_ROLE = USER_ROLE;
+    }
+
     public Integer getAdminid(){return this.adminid;}
     public String getUsername(){return this.username;}
     public String getSalt(){return this.salt;}
     public String getPassword(){return this.password;}
     public String getFirstname(){return this.firstname;}
     public String getLastname(){return this.lastname;}
+
+    public String getUSER_ROLE() {
+        return this.USER_ROLE;
+    }
 }

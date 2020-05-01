@@ -16,6 +16,7 @@ public class Users {
     private String lastname;
     private String salt;
     private String password;
+    private String USER_ROLE;
     public Users(){
 
     }
@@ -26,6 +27,7 @@ public class Users {
     public void setPassword(String password){this.password=password;}
     public void setFirstname(String firstname){this.firstname=firstname;}
     public void setLastname(String lastname){this.lastname=lastname;}
+    public void setUSER_ROLE(String USER_ROLE){this.USER_ROLE=USER_ROLE;}
 
     public Integer getUserId(){return this.userid;}
     public String getUsername(){return this.username;}
@@ -33,4 +35,8 @@ public class Users {
     public String getPassword(){return this.password;}
     public String getFirstname(){return this.firstname;}
     public String getLastname(){return this.lastname;}
+
+    public String getUSER_ROLE() {
+        return this.USER_ROLE;
+    }
 }

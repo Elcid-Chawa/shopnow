@@ -1,23 +1,29 @@
 package com.eshop.shopnow.controllers;
 
 import com.eshop.shopnow.mapper.AdminMapper;
+import com.eshop.shopnow.mapper.CartMapper;
 import com.eshop.shopnow.mapper.ItemMapper;
 import com.eshop.shopnow.mapper.UserMapper;
 import com.eshop.shopnow.models.Admins;
+import com.eshop.shopnow.models.Cart;
 import com.eshop.shopnow.models.Items;
 import com.eshop.shopnow.models.Users;
 import com.eshop.shopnow.services.HashService;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -26,6 +32,7 @@ public class AdminController {
     @Autowired UserMapper userMapper;
     @Autowired AdminMapper adminMapper;
     @Autowired ItemMapper itemMapper;
+    @Autowired CartMapper cartMapper;
 
     @RequestMapping(value = "/")
     public String defaultView(){
@@ -60,6 +67,7 @@ public class AdminController {
         String hashPassword = hashService.getHashedValue(password, encodeSalt);
 
         users.setPassword(hashPassword);
+        users.setUSER_ROLE("USER_ROLE");
 
         userMapper.createUser(users);
 
@@ -105,7 +113,22 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/home")
-    public String homePage(){
+    public String homePage(Authentication authentication,
+                           Model model){
+        String username = authentication.getName();
+        Users users = userMapper.findByUsername(username);
+
+        List<Items> items = itemMapper.findAllItems();
+
+        model.addAttribute("items", items);
+
+        try {
+            List<Cart> cartList = cartMapper.findCartByUserId(users.getUserId());
+            model.addAttribute("cartCount", cartList.size());
+        } catch (NullPointerException e){
+            return "redirect:/";
+        }
+
         return "home";
     }
 
@@ -121,7 +144,7 @@ public class AdminController {
 
         Items items = new Items();
 
-        items.setAdminId(admin.getAdminid());
+        items.setAdminid(admin.getAdminid());
         items.setItemName(itemName);
         items.setItemDescription(itemDescription);
         items.setPrice(itemPrice);
@@ -155,7 +178,7 @@ public class AdminController {
             item.setItemDescription(itemDescription);
             item.setPrice(itemPrice);
             item.setImageUrl(imageUrl);
-            item.setAdminId(adminid);
+            item.setAdminid(adminid);
 
             itemMapper.updateItem(item);
         } catch (Exception e){return "redirect/:login?error";}
@@ -165,13 +188,45 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/cart")
-    public String showCart(){
+    public String showCart(Model model, Authentication authentication){
+        String username = authentication.getName();
+        Users user = userMapper.findByUsername(username);
+
+        List<Cart> carts = cartMapper.findCartByUserId(user.getUserId());
+
+        System.out.println(carts.size());
+        List<Items> cartItem = new ArrayList<Items>();
+        for (Cart cart : carts){
+
+            cartItem.add(new Items("Product", "Description", Float.parseFloat("2.2"), "image") );
+            cartItem.add(new Items("Product 2", "Description 2", Float.parseFloat("2.2"), "image") );
+        }
+
+        model.addAttribute("itemsCount",cartItem.size());
+
+        model.addAttribute("items", cartItem);
+        //model.addAttribute("carts");
         return "cart";
     }
 
     @RequestMapping(value = "/cart/items", method = RequestMethod.POST)
-    public String addToCart(){
-        return "home";
+    public String addToCart(Authentication authentication,
+                            Model model,
+                            @RequestParam("itemid") Integer itemid,
+                            @RequestParam("quantity") Integer quantity){
+        String username = authentication.getName();
+        Users users = userMapper.findByUsername(username);
+        Items items = itemMapper.findByItemId(itemid);
+        Cart cart = new Cart();
+        cart.setQuantity(quantity);
+        cart.setCartid(users.getUserId());
+        cart.setUsers(users);
+        cart.setItem(items);
+        cart.setItemid(items.getItemid());
+
+        cartMapper.createCart(cart);
+
+        return "redirect:/home";
     }
 
 }

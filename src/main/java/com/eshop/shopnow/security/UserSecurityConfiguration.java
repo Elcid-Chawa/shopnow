@@ -25,9 +25,12 @@ public class UserSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //http.authorizeRequests()
+                //.antMatchers("/admin", "/product")
+                //.hasRole("ADMIN");
         http.authorizeRequests()
-                .antMatchers("/signup, /login, /").permitAll()
-                .antMatchers("/home", "/amdin", "/product").authenticated()
+                .antMatchers("/signup", "/login", "/", "/h2/**").permitAll()
+                .antMatchers("/home", "/admin", "/product", "/cart").authenticated()
                 .and()
                 .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/home")

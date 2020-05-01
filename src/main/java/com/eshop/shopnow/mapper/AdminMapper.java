@@ -13,15 +13,16 @@ public interface AdminMapper {
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
             @Result(property = "salt", column = "salt"),
-            @Result(property = "password", column = "password")
+            @Result(property = "password", column = "password"),
+            @Result(property = "USER_ROLE", column = "USER_ROLE")
     })
     Admins findByUsername(String username);
 
-    @Insert("INSERT into ADMINS(adminid, username, firstname, lastname, salt, password) " +
-            "VALUES(#{adminid}, #{username}, #{firstname}, #{lastname}, #{salt}, #{password})")
+    @Insert("INSERT into ADMINS(adminid, username, firstname, lastname, salt, password, USER_ROLE) " +
+            "VALUES(#{adminid}, #{username}, #{firstname}, #{lastname}, #{salt}, #{password}, #{USER_ROLE})")
     @Options(useGeneratedKeys = true, keyProperty = "adminid")
     void createAdmin(Admins admin);
 
-    @Delete("DELETE from USERS where userid=#{userid}")
+    @Delete("DELETE from USERS where adminid=#{adiminid}")
     void deleteAdmin(int adminid);
 }

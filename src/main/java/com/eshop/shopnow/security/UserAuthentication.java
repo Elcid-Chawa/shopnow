@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import javax.lang.model.type.NullType;
 import java.util.Collections;
 
 @Component
@@ -30,7 +29,6 @@ public class UserAuthentication implements AuthenticationProvider {
         Admins admins = adminMapper.findByUsername(user);
         Users users = userMapper.findByUsername(user);
         try{
-            admins.getUsername();
 
             if(admins.getUsername() != null && user.equals(admins.getUsername())){
                 return new UsernamePasswordAuthenticationToken(user, password, Collections.emptyList());
@@ -47,8 +45,10 @@ public class UserAuthentication implements AuthenticationProvider {
                         return new UsernamePasswordAuthenticationToken(user, password, Collections.emptyList());
                     }
                 }
-            }catch(NullPointerException ex){throw new BadCredentialsException("External system authentication failed");}
-
+            }catch(NullPointerException ex)
+            {
+                throw new BadCredentialsException("External system authentication failed");
+            }
 
         }
 
