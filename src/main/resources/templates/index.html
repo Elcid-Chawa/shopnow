@@ -45,12 +45,6 @@
 
                     <!-- Right -->
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#!" class="nav-link navbar-link-2 waves-effect">
-                                <span class="badge badge-pill red">1</span>
-                                <i class="fas fa-shopping-cart pl-0"></i>
-                            </a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect" id="navbarDropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <i class="united kingdom flag m-0"></i>
@@ -63,21 +57,16 @@
                         </li>
                         <li class="nav-item">
                             <a href="#!" class="nav-link waves-effect">
-                                Shop
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#!" class="nav-link waves-effect">
                                 Contact
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#!" class="nav-link waves-effect">
+                            <a href="#!" th:href="@{/login}" class="nav-link waves-effect">
                                 Sign in
                             </a>
                         </li>
                         <li class="nav-item pl-2 mb-2 mb-md-0">
-                            <a href="#!" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Sign
+                            <a href="#!" th:href="@{/signup}" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Sign
                                 up</a>
                         </li>
                     </ul>
